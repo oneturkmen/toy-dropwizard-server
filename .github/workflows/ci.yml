@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     needs: build 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Copy folder content recursively to remote
         uses: actions/checkout@master
@@ -37,23 +37,23 @@ jobs:
       #  with:
       #    source: "src/"
       #    target: "~/prod"
-      - name: Add IPv6 config
-        run: sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
+      #- name: Add IPv6 config
+      #  run: sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
 
-      - name: Enable IPv6
-        run: sudo sysctl net.ipv6.conf.all.disable_ipv6=0
+      #- name: Enable IPv6
+      #  run: sudo sysctl net.ipv6.conf.all.disable_ipv6=0
 
-      - name: Enable IPv6 default
-        run: sudo sysctl net.ipv6.conf.default.disable_ipv6=0
+      #- name: Enable IPv6 default
+      #  run: sudo sysctl net.ipv6.conf.default.disable_ipv6=0
 
-      - name: Enable IPv6 lo
-        run: sudo sysctl net.ipv6.conf.lo.disable_ipv6=0
+      #- name: Enable IPv6 lo
+      #  run: sudo sysctl net.ipv6.conf.lo.disable_ipv6=0
 
-      - name: Enable IPv6 eth0
-        run: sudo sysctl net.ipv6.conf.eth0.disable_ipv6=0
+      #- name: Enable IPv6 eth0
+      #  run: sudo sysctl net.ipv6.conf.eth0.disable_ipv6=0
 
-      - name: Enable IPv6 eth0
-        run: sudo sysctl -p 
+      #- name: Enable IPv6 eth0
+      #  run: sudo sysctl -p 
 
       - name: Deploy
         uses: appleboy/ssh-action@master
