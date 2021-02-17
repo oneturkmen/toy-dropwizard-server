@@ -26,16 +26,17 @@ jobs:
     steps:
       - name: Copy folder content recursively to remote
         uses: actions/checkout@master
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.KEY }}
-        with:
-          source: "src/"
-          target: "~/prod"
+
+      #- name: Copy file via ssh password
+      #  uses: appleboy/scp-action@master
+      #  env:
+      #    HOST: ${{ secrets.HOST }}
+      #    USERNAME: ${{ secrets.USERNAME }}
+      #    PORT: ${{ secrets.PORT }}
+      #    KEY: ${{ secrets.KEY }}
+      #  with:
+      #    source: "src/"
+      #    target: "~/prod"
 
       - name: Deploy
         uses: appleboy/ssh-action@master
