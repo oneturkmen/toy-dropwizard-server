@@ -56,4 +56,4 @@ jobs:
       #  run: sudo sysctl -p 
 
       - name: Run manually
-        run: scp -6 -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.USERNAME }}:~/prod $(pwd)
+        run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
