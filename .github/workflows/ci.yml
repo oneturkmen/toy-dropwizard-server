@@ -55,13 +55,5 @@ jobs:
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl -p 
 
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ~/prod
-            sudo docker-compose down && sudo docker-compose up --build -d
+      - name: Run manually
+        run: scp ${{ secrets.USERNAME }}@${{ secrets.USERNAME }}:../build ~/prod
