@@ -6,7 +6,7 @@ name: The best continuous integration workflow
     branches: master
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -21,8 +21,8 @@ jobs:
         run: ./gradlew test
 
   deploy:
-    needs: build 
-    runs-on: self-hosted
+    needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the contents of the repo 
         uses: actions/checkout@master
@@ -51,12 +51,34 @@ jobs:
 
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl net.ipv6.conf.eth0.disable_ipv6=0
+      - name: Install Open VPN
+        run: sudo apt-get install openvpn
 
-      - name: Run manually
+      - name: Connect VPN
+        uses: golfzaptw/action-connect-ovpn@master
+        id: connect_vpn
+        with:
+          PING_URL: '127.0.0.1'
+          FILE_OVPN: '.github/vpn/config.ovpn'
+          SECRET: ${{ secrets.SECRET_USERNAME_PASSWORD }}
+          TLS_KEY: ${{ secrets.TLS_KEY }}
         env:
-            SSHKEY: ${{ secrets.KEY }}
-        run: |
-            ls
-            echo $SSHKEY > ssh_key.pem
-            scp -6 -i ssh_key.pem -P ${{ secrets.PORT }} -r $PWD ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod
-            rm -f ssh_key.pem
+          CA_CRT: ${{ secrets.CA_CRT}}
+          USER_CRT: ${{ secrets.USER_CRT }}
+          USER_KEY: ${{ secrets.USER_KEY }}
+
+      - name: Check Connect VPN
+        run: echo ${{ steps.connect_vpn.outputs.STATUS }}
+
+      - name: kill vpn
+        if: always()
+        run: sudo killall openvpn
+
+        #- name: Run manually
+        #  env:
+        #      SSHKEY: ${{ secrets.KEY }}
+        #  run: |
+        #      ls
+        #      echo $SSHKEY > ssh_key.pem
+        #      scp -6 -i ssh_key.pem -P ${{ secrets.PORT }} -r $PWD ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod
+        #      rm -f ssh_key.pem
