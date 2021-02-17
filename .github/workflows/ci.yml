@@ -57,6 +57,8 @@ jobs:
             SSHKEY: ${{ secrets.KEY }}
         run: |
             ls
+            modprobe ipv6
+            lsmod | grep ipv6
             echo $SSHKEY > ssh_key.pem
             scp -6 -i ssh_key.pem -P ${{ secrets.PORT }} $PWD ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod
             rm -f ssh_key.pem
