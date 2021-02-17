@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     needs: build 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Copy folder content recursively to remote
         uses: actions/checkout@master
