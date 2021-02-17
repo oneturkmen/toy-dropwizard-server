@@ -35,7 +35,7 @@ jobs:
       #    PORT: ${{ secrets.PORT }}
       #    KEY: ${{ secrets.KEY }}
       #  with:
-      #    source: "src/"
+      #    source: "./"
       #    target: "~/prod"
       #- name: Add IPv6 config
       #  run: sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
@@ -54,6 +54,8 @@ jobs:
 
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl -p 
+      - name: Check if Ipv6 is configed
+        run: [ -f /proc/net/if_inet6 ] && echo 'IPv6 OK' || echo 'No IPv6'
 
       - name: Run manually
         run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
