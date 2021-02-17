@@ -54,11 +54,6 @@ jobs:
 
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl -p 
-      - name: Check curr dir
-        run: ls -1
-      
-      - name: Check prev folder
-        run: cd ../ && ls -1
 
       - name: Run manually
-        run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.USERNAME }}:~/prod ../build
+        run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.USERNAME }}:~/prod .
