@@ -56,6 +56,7 @@ jobs:
         env:
             SSHKEY: ${{ secrets.KEY }}
         run: |
-            echo $SSKEY > ssh_key.pem
+            ls
+            echo $SSHKEY > ssh_key.pem
             scp -6 -i ssh_key.pem -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
             rm -f ssh_key.pem
