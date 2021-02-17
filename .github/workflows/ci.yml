@@ -27,16 +27,16 @@ jobs:
       - name: Check out the contents of the repo 
         uses: actions/checkout@master
 
-      #- name: Copy file via ssh password
-      #  uses: appleboy/scp-action@master
-      #  env:
-      #    HOST: ${{ secrets.HOST }}
-      #    USERNAME: ${{ secrets.USERNAME }}
-      #    PORT: ${{ secrets.PORT }}
-      #    KEY: ${{ secrets.KEY }}
-      #  with:
-      #    source: "./"
-      #    target: "~/prod"
+      - name: Copy file via ssh password
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.KEY }}
+        with:
+          source: "src/"
+          target: "~/prod"
       #- name: Add IPv6 config
       #  run: sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
 
@@ -52,10 +52,5 @@ jobs:
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl net.ipv6.conf.eth0.disable_ipv6=0
 
-      #- name: Enable IPv6 eth0
-      #  run: sudo sysctl -p 
-      - name: Check if Ipv6 is configed
-        run: sh -c "[ -f /proc/net/if_inet6 ] && echo 'IPv6 OK' || echo 'No IPv6'"
-
-      - name: Run manually
-        run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
+      #- name: Run manually
+      #  run: scp -6 -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
