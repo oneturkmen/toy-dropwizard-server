@@ -38,7 +38,10 @@ jobs:
       #    source: "src/"
       #    target: "~/prod"
       - name: Add IPv6 config
-        run: sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
+        run: sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
+
+      - name: Enable IPv6
+        run: sysctl net.ipv6.conf.all.disable_ipv6=0
 
       - name: Deploy
         uses: appleboy/ssh-action@master
