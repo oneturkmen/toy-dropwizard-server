@@ -24,7 +24,7 @@ jobs:
     needs: build 
     runs-on: ubuntu-latest
     steps:
-      - name: Copy folder content recursively to remote
+      - name: Check out the contents of the repo 
         uses: actions/checkout@master
 
       #- name: Copy file via ssh password
@@ -54,6 +54,11 @@ jobs:
 
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl -p 
+      - name: Check curr dir
+        run: ls -1
+      
+      - name: Check prev folder
+        run: cd ../ && ls -1
 
       - name: Run manually
         run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.USERNAME }}:~/prod ../build
