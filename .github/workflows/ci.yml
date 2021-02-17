@@ -55,7 +55,7 @@ jobs:
       #- name: Enable IPv6 eth0
       #  run: sudo sysctl -p 
       - name: Check if Ipv6 is configed
-        run: [ -f /proc/net/if_inet6 ] && echo 'IPv6 OK' || echo 'No IPv6'
+        run: sh -c "[ -f /proc/net/if_inet6 ] && echo 'IPv6 OK' || echo 'No IPv6'"
 
       - name: Run manually
         run: scp -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }}:~/prod $(pwd)
